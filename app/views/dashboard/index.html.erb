@@ -1,1 +1,14 @@
 <h1>Invoicing</h1>
+
+<br /><%= @accountant.fiscal_year.first.strftime('%B %Y') %>-<%= @accountant.fiscal_year.end.strftime('%B %Y') %>
+<br />Taxes: <%= number_to_currency(@accountant.taxes, precision: 2, unit: '$') %>
+<br />ACC: <%= number_to_currency(@accountant.acc, precision: 2, unit: '$') %>
+<br />GST: <%= number_to_currency(@accountant.gst, precision: 2, unit: '$') %>
+<br />Income: <%= number_to_currency(@accountant.income, precision: 2, unit: '$') %>
+<br />Revenue: <%= number_to_currency(@accountant.revenue, precision: 2, unit: '$') %>
+
+<% if @unpaid_invoices.any? %>
+  <% @unpaid_invoices.each do |invoice| %>
+
+  <% end  %>
+<% end %>

@@ -6,7 +6,11 @@ usd.conversion_rates.create!(valid_from: Time.now.beginning_of_year, valid_to: T
 pound = Currency.create!(name: 'British Pound', code: 'GBP', symbol: '£')
 pound.conversion_rates.create!(valid_from: Time.now.beginning_of_year, valid_to: Time.now.end_of_year, rate: 1.7573.to_d)
 
-invoice = sherlock.invoices.build(date: Time.now, number: 1002, zero_rated_gst: true, discount_in_percents: 10, currency: pound)
+invoice = sherlock.invoices.build(date: Time.now, number: 1002, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :paid)
 invoice.line_items.build(description: 'Software development services', quantity: 55, unit_price: 200)
 invoice.line_items.build(description: 'Web hosting', quantity: 1, unit_price: 10)
 invoice.save!
+
+unpaid_invoice = sherlock.invoices.build(date: Time.now, number: 1003, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :unpaid)
+unpaid_invoice.line_items.build(description: 'Software development services', quantity: 5, unit_price: 200)
+unpaid_invoice.save!
