@@ -11,22 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311045128) do
+ActiveRecord::Schema.define(version: 20170313032926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string   "name",           null: false
-    t.string   "position"
     t.string   "company"
-    t.string   "company_tax_id"
     t.string   "address_line_1", null: false
     t.string   "address_line_2"
     t.string   "address_line_3"
+    t.string   "address_line_4"
+    t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "client_id",  null: false
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.string   "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["client_id"], name: "index_contacts_on_client_id", using: :btree
 
   create_table "conversion_rates", force: :cascade do |t|
     t.integer  "currency_id",                         null: false
@@ -47,18 +57,31 @@ ActiveRecord::Schema.define(version: 20170311045128) do
     t.datetime "updated_at"
   end
 
-  create_table "invoices", force: :cascade do |t|
-    t.integer "client_id",                        null: false
-    t.integer "currency_id",                      null: false
-    t.date    "date",                             null: false
-    t.boolean "zero_rated_gst",                   null: false
-    t.integer "number",                           null: false
-    t.integer "discount_in_percents"
-    t.integer "status",               default: 0, null: false
-    t.integer "integer",              default: 0, null: false
+  create_table "expenses", force: :cascade do |t|
+    t.integer  "currency_id",                          null: false
+    t.decimal  "value",        precision: 8, scale: 2, null: false
+    t.boolean  "includes_gst",                         null: false
+    t.string   "description",                          null: false
+    t.date     "date",                                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "invoices", ["client_id"], name: "index_invoices_on_client_id", using: :btree
+  add_index "expenses", ["currency_id"], name: "index_expenses_on_currency_id", using: :btree
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "contact_id",                       null: false
+    t.integer  "currency_id",                      null: false
+    t.date     "date",                             null: false
+    t.boolean  "zero_rated_gst",                   null: false
+    t.integer  "number",                           null: false
+    t.integer  "discount_in_percents", default: 0, null: false
+    t.integer  "status",               default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invoices", ["contact_id"], name: "index_invoices_on_contact_id", using: :btree
   add_index "invoices", ["currency_id"], name: "index_invoices_on_currency_id", using: :btree
 
   create_table "line_items", force: :cascade do |t|
@@ -72,8 +95,10 @@ ActiveRecord::Schema.define(version: 20170311045128) do
 
   add_index "line_items", ["invoice_id"], name: "index_line_items_on_invoice_id", using: :btree
 
+  add_foreign_key "contacts", "clients"
   add_foreign_key "conversion_rates", "currencies"
-  add_foreign_key "invoices", "clients"
+  add_foreign_key "expenses", "currencies"
+  add_foreign_key "invoices", "contacts"
   add_foreign_key "invoices", "currencies"
   add_foreign_key "line_items", "invoices"
 end

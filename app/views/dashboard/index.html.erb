@@ -4,8 +4,35 @@
 <br />Taxes: <%= number_to_currency(@accountant.taxes, precision: 2, unit: '$') %>
 <br />ACC: <%= number_to_currency(@accountant.acc, precision: 2, unit: '$') %>
 <br />GST: <%= number_to_currency(@accountant.gst, precision: 2, unit: '$') %>
+<br />Gross Income: <%= number_to_currency(@accountant.gross_income, precision: 2, unit: '$') %>
+<br />Claimable Expenses: <%= number_to_currency(@accountant.claimable_expenses, precision: 2, unit: '$') %>
+<br />Expenses GST: <%= number_to_currency(@accountant.claimable_gst, precision: 2, unit: '$') %>
 <br />Income: <%= number_to_currency(@accountant.income, precision: 2, unit: '$') %>
 <br />Revenue: <%= number_to_currency(@accountant.revenue, precision: 2, unit: '$') %>
+
+<h2>Invoices</h2>
+<table>
+<% @invoices.each do |invoice| %>
+  <tr>
+    <td><%= invoice.date.strftime('%b %-d') %></td>
+    <td><%= invoice.contact.name %></td>
+    <td><%= invoice.contact.client.company %></td>
+    <td><%= invoice.currency.code %></td>
+    <td><%= number_to_currency(invoice.total_in_nzd, precision: 2, unit: '$') %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Expenses</h2>
+<table>
+<% @expenses.each do |expense| %>
+  <tr>
+    <td><%= expense.date.strftime('%b %-d') %></td>
+    <td><%= expense.description %></td>
+    <td><%= number_to_currency(expense.value_in_nzd, precision: 2, unit: '$') %></td>
+  </tr>
+<% end %>
+</table>
 
 <% if @unpaid_invoices.any? %>
   <% @unpaid_invoices.each do |invoice| %>

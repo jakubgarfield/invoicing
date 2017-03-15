@@ -1,5 +1,7 @@
 class Currency < ActiveRecord::Base
   has_many :conversion_rates
+  has_many :expenses
+  has_many :invoices
 
   validates :code, presence: true
   validates :name, presence: true

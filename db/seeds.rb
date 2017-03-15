@@ -1,16 +1,6 @@
-sherlock = Client.create!(name: 'Sherlock Holmes', position: 'Head of Investigation', company: 'Holmes & Watson Ltd.', company_tax_id: 'IRD: 123-456-789', address_line_1: '221b Baker Street', address_line_2: 'London', address_line_3: 'United Kingdom')
-
 usd = Currency.create!(name: 'US Dollar', code: 'USD', symbol: '$')
-usd.conversion_rates.create!(valid_from: Time.now.beginning_of_year, valid_to: Time.now.end_of_year, rate: 1.3998.to_d)
+usd.conversion_rates.create!(valid_from: Time.new(2016).beginning_of_year, valid_to: Time.new(2016).end_of_year, rate: 1.4365.to_d)
+usd.conversion_rates.create!(valid_from: Time.new(2017).beginning_of_year, valid_to: Time.new(2017).end_of_year, rate: 1.4023.to_d)
 
-pound = Currency.create!(name: 'British Pound', code: 'GBP', symbol: '£')
-pound.conversion_rates.create!(valid_from: Time.now.beginning_of_year, valid_to: Time.now.end_of_year, rate: 1.7573.to_d)
-
-invoice = sherlock.invoices.build(date: Time.now, number: 1002, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :paid)
-invoice.line_items.build(description: 'Software development services', quantity: 55, unit_price: 200)
-invoice.line_items.build(description: 'Web hosting', quantity: 1, unit_price: 10)
-invoice.save!
-
-unpaid_invoice = sherlock.invoices.build(date: Time.now, number: 1003, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :unpaid)
-unpaid_invoice.line_items.build(description: 'Software development services', quantity: 5, unit_price: 200)
-unpaid_invoice.save!
+nzd = Currency.create!(name: 'New Zealand Dollar', code: 'NZD', symbol: '$')
+nzd.conversion_rates.create!(valid_from: Time.new(2000).beginning_of_year, valid_to: Time.new(2099).end_of_year, rate: 1.to_d)

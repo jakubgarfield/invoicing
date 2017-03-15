@@ -44,28 +44,28 @@ class Accountant
   end
 
   def revenue
-    income - paid_expenses - gst
-  end
-
-  private
-  def paid_invoices
-    Invoice.where(date: fiscal_year).paid
+    income - claimable_expenses - gst
   end
 
   def gross_income
     @gross_income ||= paid_invoices.inject(0) { |sum, invoice| sum + (invoice.total_in_nzd - invoice.gst) }
   end
 
-  def paid_expenses
-    0
-  end
-
   def claimable_expenses
-    0
+    @claimable_expenses ||= paid_expenses.map(&:claimable_value).sum
   end
 
   def claimable_gst
-    0
+    @claimable_gst ||= paid_expenses.map(&:gst).sum
+  end
+
+  private
+  def paid_invoices
+    @paid_invoices ||= Invoice.where(date: fiscal_year).paid
+  end
+
+  def paid_expenses
+    @paid_expenses ||= Expense.where(date: fiscal_year)
   end
 
   def tax_component(income, from, to, at)
