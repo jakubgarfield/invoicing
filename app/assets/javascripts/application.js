@@ -12,4 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require tether
+//= require bootstrap
+//= require material.min
+//= require material-dashboard
+//= require chartist.min
 //= require_tree .

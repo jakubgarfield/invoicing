@@ -3,10 +3,59 @@
 <head>
   <title>Invoicing</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
+  <nav class="navbar navbar-transparent">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to 'Invoicing', root_path, class: 'navbar-brand' %>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">note_add</i> Add Invoice
+            </a>
+          </li>
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">add_shopping_cart</i> Add Expense
+            </a>
+          </li>
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">dashboard</i> Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">people</i> Contacts
+            </a
+          </li>
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">attach_money</i> Currencies
+            </a
+          </li>
+          <li>
+            <a href="<%= root_path %>">
+              <i class="material-icons">assignment</i> Timesheet
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
 <%= yield %>
 
