@@ -16,8 +16,26 @@ class InvoicesController < ApplicationController
   end
 
   def void
+    @invoice = Invoice.find(params[:id])
+
+    if @invoice.update_attributes(status: :voided)
+      flash.notice = "Invoice was successfully voided."
+    else
+      flash.alert = "Something was wrong while voiding the invoice."
+    end
+
+    redirect_to root_path
   end
 
   def pay
+    @invoice = Invoice.find(params[:id])
+
+    if @invoice.update_attributes(status: :paid)
+      flash.notice = "Invoice was successfully paid."
+    else
+      flash.alert = "Something was wrong while paying the invoice."
+    end
+
+    redirect_to root_path
   end
 end

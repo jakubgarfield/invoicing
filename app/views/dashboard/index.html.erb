@@ -94,7 +94,7 @@
                     <td><%= invoice.contact.client.company %></td>
                     <td><%= invoice.currency.code %></td>
                     <td class="text-right"><%= number_to_currency(invoice.total_in_nzd, precision: 0, unit: '$') %></td>
-                    <td class="text-right"><i class="material-icons">monetization_on</i> <i class="material-icons">money_off</i> <i class="material-icons">print</i></td>
+                    <td class="text-right"><a href="<%= pay_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Pay"><i class="material-icons">monetization_on</i></a> <a href="<%= void_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Void"><i class="material-icons">money_off</i></a> <a href="<%= invoice_path(invoice, format: :pdf) %>" title="PDF"><i class="material-icons">print</i></a></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -132,7 +132,7 @@
                   <td><%= invoice.contact.client.company %></td>
                   <td><%= invoice.currency.code %></td>
                   <td class="text-right"><%= number_to_currency(invoice.total_in_nzd, precision: 0, unit: '$') %></td>
-                  <td class="text-right"><a href="<%= void_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Void"><i class="material-icons">money_off</i></a> <a href="<%= invoice_path(invoice, format: :pdf) %>" title="PDF" target="_blank"><i class="material-icons">print</i></a></td>
+                  <td class="text-right"><a href="<%= void_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Void"><i class="material-icons">money_off</i></a> <a href="<%= invoice_path(invoice, format: :pdf) %>" title="PDF"><i class="material-icons">print</i></a></td>
                 </tr>
               <% end %>
             </tbody>
@@ -169,4 +169,43 @@
       </div>
     </div>
   </div>
+
+  <% if @voided_invoices.present? %>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="title">Voided Invoices</h4>
+            <p class="category">All voided invoices in this fiscal year</p>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Currency</th>
+                  <th class="text-right">Total (NZD)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @voided_invoices.each do |invoice| %>
+                  <tr>
+                    <td><%= invoice.date.strftime('%b %-d') %></td>
+                    <td><%= invoice.contact.name %></td>
+                    <td><%= invoice.contact.client.company %></td>
+                    <td><%= invoice.currency.code %></td>
+                    <td class="text-right"><%= number_to_currency(invoice.total_in_nzd, precision: 0, unit: '$') %></td>
+                    <td class="text-right"><a href="<%= pay_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Pay"><i class="material-icons">monetization_on</i></a> <a href="<%= invoice_path(invoice, format: :pdf) %>" title="PDF"><i class="material-icons">print</i></a></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -57,7 +57,35 @@
     </div>
   </nav>
 
-<%= yield %>
+  <% if flash[:notice].present? %>
+    <div class="alert alert-success">
+      <div class="container-fluid">
+        <div class="alert-icon">
+          <i class="material-icons">check</i>
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+        <%= flash[:notice] %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">
+      <div class="container-fluid">
+        <div class="alert-icon">
+          <i class="material-icons">error_outline</i>
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+        <%= flash[:alert] %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>
