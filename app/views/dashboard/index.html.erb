@@ -1,5 +1,13 @@
 <div class="container-fluid">
   <div class="row">
+    <div class="col-lg-12">
+      <div class="pull-right">
+        <a href="<%= root_path(year_offset: @year_offset - 1) %>" title="Previous fiscal year" class="text-muted"><i class="material-icons">navigate_before</i></a>
+        <a href="<%= root_path(year_offset: @year_offset + 1) %>" title="Next fiscal year" class="text-muted"><i class="material-icons">navigate_next</i></a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="card card-stats">
         <div class="card-header" data-background-color="orange">
