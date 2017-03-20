@@ -11,8 +11,11 @@ sherlock = client.contacts.build(name: 'Sherlock Holmes', email: 'sherlock@inves
 client.save!
 
 invoice = sherlock.invoices.build(date: Time.now, number: 1001, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :paid)
+invoice.line_items.build(description: 'Software development services', quantity: 10, unit_price: 200)
+invoice.line_items.build(description: 'Webhosting', quantity: 5, unit_price: 10)
+invoice.save!
 
-another_invoice = sherlock.invoices.build(date: Time.now, number: 1002, zero_rated_gst: true, discount_in_percents: 10, currency: pound, status: :paid)
+another_invoice = sherlock.invoices.build(date: Time.now, number: 1002, zero_rated_gst: false, discount_in_percents: 0, currency: nzd, status: :paid)
 another_invoice.line_items.build(description: 'Software development services', quantity: 10, unit_price: 200)
 another_invoice.save!
 

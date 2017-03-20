@@ -51,7 +51,7 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="card card-stats">
         <div class="card-header" data-background-color="blue">
-          <i class="material-icons">store</i>
+          <i class="material-icons">receipt</i>
         </div>
         <div class="card-content">
           <p class="category">Expenses</p>
@@ -66,12 +66,51 @@
     </div>
   </div>
 
+  <% if @unpaid_invoices.present? %>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header" data-background-color="orange">
+            <h4 class="title">Unpaid Invoices</h4>
+            <p class="category">All unpaid invoices in this fiscal year</p>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Currency</th>
+                  <th class="text-right">Total (NZD)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @unpaid_invoices.each do |invoice| %>
+                  <tr>
+                    <td><%= invoice.date.strftime('%b %-d') %></td>
+                    <td><%= invoice.contact.name %></td>
+                    <td><%= invoice.contact.client.company %></td>
+                    <td><%= invoice.currency.code %></td>
+                    <td class="text-right"><%= number_to_currency(invoice.total_in_nzd, precision: 0, unit: '$') %></td>
+                    <td class="text-right"><i class="material-icons">monetization_on</i> <i class="material-icons">money_off</i> <i class="material-icons">print</i></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row">
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="green">
           <h4 class="title">Invoices</h4>
-          <p class="category">All invoices in this fiscal year</p>
+          <p class="category">All paid invoices in this fiscal year</p>
         </div>
         <div class="card-content table-responsive">
           <table class="table table-hover">
@@ -82,16 +121,18 @@
                 <th>Company</th>
                 <th>Currency</th>
                 <th class="text-right">Total (NZD)</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <% @invoices.each do |invoice| %>
+              <% @paid_invoices.each do |invoice| %>
                 <tr>
                   <td><%= invoice.date.strftime('%b %-d') %></td>
                   <td><%= invoice.contact.name %></td>
                   <td><%= invoice.contact.client.company %></td>
                   <td><%= invoice.currency.code %></td>
                   <td class="text-right"><%= number_to_currency(invoice.total_in_nzd, precision: 0, unit: '$') %></td>
+                  <td class="text-right"><a href="<%= void_invoice_path(invoice) %>" rel="nofollow" data-method="post" title="Void"><i class="material-icons">money_off</i></a> <a href="<%= invoice_path(invoice, format: :pdf) %>" title="PDF" target="_blank"><i class="material-icons">print</i></a></td>
                 </tr>
               <% end %>
             </tbody>
@@ -119,7 +160,7 @@
                 <tr>
                   <td><%= expense.date.strftime('%b %-d') %></td>
                   <td><%= expense.description %></td>
-                  <td class="text-right"><%= number_to_currency(expense.value_in_nzd, precision: 2, unit: '$') %></td>
+                  <td class="text-right"><%= number_to_currency(expense.value_in_nzd, precision: 0, unit: '$') %></td>
                 </tr>
               <% end %>
             </tbody>
