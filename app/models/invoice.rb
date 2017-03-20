@@ -15,7 +15,9 @@ class Invoice < ActiveRecord::Base
   validates :zero_rated_gst, inclusion: { in: [ true, false ] }
   validate :gst_applies_to_nzd_only
 
-  # when PDF is generated, save it on filesystem and don't regenerate
+  def filename
+    "#{number}_#{date.strftime("%Y%m%d")}_#{contact.client.company.gsub(/[^0-9a-z]/i, '').underscore}.pdf"
+  end
 
   def undiscounted_total
     line_items.map(&:total).sum
