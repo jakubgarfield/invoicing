@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :expenses, only: [:new, :create, :edit, :update, :destroy]
+
   root 'dashboard#index'
 end

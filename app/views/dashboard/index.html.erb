@@ -161,6 +161,7 @@
                 <th>Date</th>
                 <th>Description</th>
                 <th class="text-right">Total (NZD)</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -169,6 +170,7 @@
                   <td><%= expense.date.strftime('%b %-d') %></td>
                   <td><%= expense.description %></td>
                   <td class="text-right"><%= number_to_currency(expense.value_in_nzd, precision: 0, unit: '$') %></td>
+                  <td class="text-right"><a href="<%= edit_expense_path(expense) %>" title="Edit"><i class="material-icons">mode_edit</i></a> <a href="<%= expense_path(expense) %>" data-method="delete" data-confirm="Are you sure?" title="Delete"><i class="material-icons">delete</i></a></td>
                 </tr>
               <% end %>
             </tbody>
