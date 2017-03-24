@@ -1,0 +1,62 @@
+<%= form_for(@client) do |f| %>
+  <% if @contact %>
+    <%= fields_for :contact, @contact do |fc| %>
+      <div class="form-group label-floating <%= "has-error" if @contact.errors.has_key?(:name) %>">
+        <%= fc.label :name, class: 'control-label' %>
+        <%= fc.text_field :name, class: 'form-control', autofocus: true %>
+      </div>
+      <div class="form-group label-floating">
+        <%= fc.label :position, class: 'control-label' %>
+        <%= fc.text_field :position, class: 'form-control' %>
+      </div>
+      <div class="form-group label-floating <%= "has-error" if @contact.errors.has_key?(:email) %>">
+        <%= fc.label :email, class: 'control-label' %>
+        <%= fc.email_field :email, class: 'form-control' %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="form-group label-floating">
+    <%= f.label :company, class: 'control-label' %>
+    <%= f.text_field :company, class: 'form-control' %>
+  </div>
+  <div class="form-group label-floating">
+    <%= f.label :group, class: 'control-label' %>
+    <%= f.text_field :group, class: 'form-control' %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @client.errors.has_key?(:address_line_1) %>">
+    <%= f.label :address_line_1, class: 'control-label' %>
+    <%= f.text_field :address_line_1, class: 'form-control', autofocus: true %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @client.errors.has_key?(:address_line_2) %>">
+    <%= f.label :address_line_2, class: 'control-label' %>
+    <%= f.text_field :address_line_2, class: 'form-control', autofocus: true %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @client.errors.has_key?(:address_line_3) %>">
+    <%= f.label :address_line_3, class: 'control-label' %>
+    <%= f.text_field :address_line_3, class: 'form-control', autofocus: true %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @client.errors.has_key?(:address_line_4) %>">
+    <%= f.label :address_line_4, class: 'control-label' %>
+    <%= f.text_field :address_line_4, class: 'form-control', autofocus: true %>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  var groups = [<%= @groups.map { |group| "'#{group}'" }.join(",").html_safe %>];
+  $('#client_group').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'groups',
+    source: new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: groups
+    })
+  });
+});
+</script>

@@ -17,4 +17,5 @@
 //= require material.min
 //= require material-dashboard
 //= require chartist.min
+//= require typeahead.bundle
 //= require_tree .

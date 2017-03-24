@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header" data-background-color="purple">
+          <div class="row">
+            <div class="col-lg-6">
+              <h4 class="title">Clients and Contacts</h4>
+              <p class="category">All clients and contacts</p>
+            </div>
+            <div class="col-lg-6 text-right">
+              <a href="<%= new_client_path %>" title="Add client" class="text-muted"><i class="material-icons">note_add</i></a>
+            </div>
+          </div>
+        </div>
+        <div class="card-content table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Group</th>
+                <th>Address 1</th>
+                <th>Address 2</th>
+                <th>Address 3</th>
+                <th class="text-right">Address 4</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @clients.each do |client| %>
+                <tr>
+                  <td class="text-purple"><%= client.company %></td>
+                  <td><%= client.group %></td>
+                  <td><%= client.address_line_1 %></td>
+                  <td><%= client.address_line_2 %></td>
+                  <td><%= client.address_line_3 %></td>
+                  <td class="text-right"><%= client.address_line_4 %></td>
+                  <td class="text-right"><a href="<%= new_client_contact_path(client) %>"><i class="material-icons">person_add</i>  <a href="<%= edit_client_path(client) %>" title="Edit"><i class="material-icons">mode_edit</i></a> <a href="<%= client_path(client) %>" data-method="delete" data-confirm="Are you sure?" title="Delete"><i class="material-icons">delete</i></a></td>
+                </tr>
+                <% client.contacts.each do |contact| %>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="4" class="text-right"><a href="mailto:<%= contact.email %>" target="_blank"><%= contact.name %></a></td>
+                    <td class="text-right"><a href="<%= edit_client_contact_path(client, contact) %>" title="Edit"><i class="material-icons">mode_edit</i></a> <a href="<%= client_contact_path(client, contact) %>" data-method="delete" data-confirm="Are you sure?" title="Delete"><i class="material-icons">delete</i></a></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

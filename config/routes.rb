@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   end
 
   resources :expenses, only: [:new, :create, :edit, :update, :destroy]
+  resources :clients, except: [:show] do
+    resources :contacts, except: [:index, :show]
+  end
 
   root 'dashboard#index'
 end
