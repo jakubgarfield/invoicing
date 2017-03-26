@@ -1,0 +1,15 @@
+<%= form_for([@currency, @conversion_rate]) do |f| %>
+  <div class="form-group <%= "has-error" if @conversion_rate.errors.has_key?(:valid_from) %>">
+    <%= f.label :valid_from, class: 'control-label' %>
+    <%= f.date_field :valid_from, class: 'form-control', autofocus: true %>
+  </div>
+  <div class="form-group <%= "has-error" if @conversion_rate.errors.has_key?(:valid_to) %>">
+    <%= f.label :valid_to, class: 'control-label' %>
+    <%= f.date_field :valid_to, class: 'form-control' %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @conversion_rate.errors.has_key?(:rate) %>">
+    <%= f.label :rate, class: 'control-label' %>
+    <%= f.number_field :rate, class: 'form-control', step: 0.0001, min: 0.0001 %>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>

@@ -11,5 +11,9 @@ Rails.application.routes.draw do
     resources :contacts, except: [:index, :show]
   end
 
+  resources :currencies, except: [:show] do
+    resources :conversion_rates, except: [:index, :show]
+  end
+
   root 'dashboard#index'
 end
