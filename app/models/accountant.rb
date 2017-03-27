@@ -61,11 +61,11 @@ class Accountant
 
   private
   def paid_invoices
-    @paid_invoices ||= Invoice.where(date: fiscal_year).paid
+    @paid_invoices ||= Invoice.includes(:line_items, :currency).where(date: fiscal_year).paid
   end
 
   def paid_expenses
-    @paid_expenses ||= Expense.where(date: fiscal_year)
+    @paid_expenses ||= Expense.includes(:currency).where(date: fiscal_year)
   end
 
   def tax_component(income, from, to, at)

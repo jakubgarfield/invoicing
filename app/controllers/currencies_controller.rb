@@ -1,6 +1,6 @@
 class CurrenciesController < ApplicationController
   def index
-    @currencies = Currency.includes(:conversion_rates)
+    @currencies = Currency.all
   end
 
   def new

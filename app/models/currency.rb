@@ -8,8 +8,9 @@ class Currency < ActiveRecord::Base
   validates :symbol, presence: true
 
   def conversion_rate(date)
-    available_conversion_rates = conversion_rates.where("valid_from < :date AND valid_to >= :date", date: date)
-    raise "Conversion rate for #{date} is missing" if available_conversion_rates.empty?
-    available_conversion_rates.first
+    # TODO: Improve caching of conversion rates for dashboard (renders in 701 ms)
+    available_conversion_rate = conversion_rates.where("valid_from < :date AND valid_to >= :date", date: date).first
+    raise "Conversion rate for #{date} is missing" if available_conversion_rate.nil?
+    available_conversion_rate
   end
 end

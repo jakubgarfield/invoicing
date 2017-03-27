@@ -64,7 +64,7 @@ class InvoicesController < ApplicationController
 
   private
   def setup_form_data
-    @contacts = Contact.joins(:client).order('clients.group asc, UPPER(clients.company) asc, contacts.name asc')
+    @contacts = Contact.joins(:client).includes(:client).order('clients.group asc, UPPER(clients.company) asc, contacts.name asc')
     @currencies = Currency.order(:code)
     @numbers = Invoice.joins(contact: :client).group('clients.group').maximum('number + 1')
   end
