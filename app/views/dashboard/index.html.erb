@@ -117,8 +117,15 @@
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="green">
-          <h4 class="title">Invoices</h4>
-          <p class="category">All paid invoices in this fiscal year</p>
+          <div class="row">
+            <div class="col-lg-6">
+              <h4 class="title">Invoices</h4>
+              <p class="category">All paid invoices in this fiscal year</p>
+            </div>
+            <div class="col-lg-6 text-right">
+              <a href="<%= new_invoice_path %>" title="Add invoice" class="text-muted"><i class="material-icons">note_add</i></a>
+            </div>
+          </div>
         </div>
         <div class="card-content table-responsive">
           <table class="table table-hover">
@@ -151,8 +158,15 @@
     <div class="col-lg-6 col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="blue">
-          <h4 class="title">Expenses</h4>
-          <p class="category">All expenses in this fiscal year</p>
+          <div class="row">
+            <div class="col-lg-6">
+              <h4 class="title">Expenses</h4>
+              <p class="category">All expenses in this fiscal year</p>
+            </div>
+            <div class="col-lg-6 text-right">
+              <a href="<%= new_expense_path %>" title="Add expense" class="text-muted"><i class="material-icons">note_add</i></a>
+            </div>
+          </div>
         </div>
         <div class="card-content table-responsive">
           <table class="table table-hover">

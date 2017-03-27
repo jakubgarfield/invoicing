@@ -26,6 +26,6 @@ class Expense < ActiveRecord::Base
 
   private
   def is_low_cost_asset
-    errors.add(:value, 'higher than 500 NZD needs to be depreciated') if value_in_nzd > 500
+    errors.add(:value, 'higher than 500 NZD needs to be depreciated if it is an asset') if value_in_nzd > 500
   end
 end

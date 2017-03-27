@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   def new
-    @currencies = Currency.all
+    @currencies = Currency.order(:code)
     @expense = Expense.new(currency: @currencies.first, date: Date.today)
   end
 
@@ -11,14 +11,14 @@ class ExpensesController < ApplicationController
       flash.notice = "Expense saved successfully."
       redirect_to root_path
     else
-      @currencies = Currency.all
+      @currencies = Currency.order(:code)
       flash.alert = @expense.errors.full_messages.to_sentence
       render :new
     end
   end
 
   def edit
-    @currencies = Currency.all
+    @currencies = Currency.order(:code)
     @expense = Expense.find(params[:id])
   end
 
@@ -29,7 +29,7 @@ class ExpensesController < ApplicationController
       flash.notice = "Expense updated successfully."
       redirect_to root_path
     else
-      @currencies = Currency.all
+      @currencies = Currency.order(:code)
       flash.alert = @expense.errors.full_messages.to_sentence
       render :edit
     end

@@ -1,0 +1,108 @@
+<div class="container-fluid form">
+  <h1>Add Invoice</h1>
+  <%= form_for(@invoice) do |f| %>
+    <div class="form-group">
+      <% @currencies.each do |currency| %>
+        <div class="radio">
+          <label>
+            <%= f.radio_button("currency_id", currency.id.to_s) %>
+            <%= "#{currency.symbol} #{currency.code}" %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+    <div class="form-group label-floating">
+      <%= f.label :contact, class: 'control-label' %>
+      <%= f.select(:contact_id,
+                   @contacts.map { |c| ["#{c.name} (#{c.client.company || c.client.address_line_1})", c.id] },
+                   {},
+                   { class: "form-control" }) %>
+    </div>
+    <div id="line-items">
+      <% @invoice.line_items.each do |line_item| %>
+        <div class="row">
+          <%= f.fields_for "line_items[]", line_item do |fl| %>
+            <div class="col-sm-6">
+              <div class="form-group label-floating <%= "has-error" if line_item.errors.has_key?(:description) %>">
+                <%= fl.label :description, class: 'control-label' %>
+                <%= fl.text_field :description, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group label-floating <%= "has-error" if line_item.errors.has_key?(:quantity) %>">
+                <%= fl.label :quantity, class: 'control-label' %>
+                <%= fl.number_field :quantity, class: 'form-control', step: 1, min: 0 %>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group label-floating <%= "has-error" if line_item.errors.has_key?(:unit_price) %>">
+                <%= fl.label :unit_price, class: 'control-label' %>
+                <%= fl.number_field :unit_price, class: 'form-control', step: 0.01, min: 0.01 %>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group label-floating text-center">
+                <a href="#" class="add-line-item"><i class="material-icons">add</i></a>
+                <a href="#" class="remove-line-item"><i class="material-icons">delete</i></a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :zero_rated_gst %>
+          Zero Rated GST?
+        </label>
+      </div>
+    </div>
+    <div class="form-group label-floating <%= "has-error" if @invoice.errors.has_key?(:number) %>">
+      <%= f.label :number, class: 'control-label' %>
+      <%= f.number_field :number, class: 'form-control', step: 1, min: 0 %>
+    </div>
+    <div class="form-group label-floating">
+      <%= f.label :date, class: 'control-label' %>
+      <%= f.date_field :date, class: 'form-control' %>
+    </div>
+    <div class="form-group label-floating <%= "has-error" if @invoice.errors.has_key?(:discount_in_percents) %>">
+      <%= f.label :discount_in_percents, class: 'control-label' %>
+      <%= f.number_field :discount_in_percents, class: 'form-control', step: 1, min: 0 %>
+    </div>
+    <%= f.hidden_field :status %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    var contactToNumber = <%= @contacts.inject(Hash.new) { |acc, c| acc[c.id] = @numbers[c.client.group]; acc }.to_json.html_safe %>;
+    $('#invoice_contact_id').on('change', function() {
+      $('#invoice_number').val(contactToNumber[$(this).val()]);
+    });
+
+    var addLineItem = function(e) {
+      e.preventDefault();
+      $(this).closest(".row").clone().appendTo("#line-items");
+      bindLineItemControls();
+    };
+
+    var removeLineItem = function(e) {
+      e.preventDefault();
+      if ($(".remove-line-item").length > 1) {
+        $(this).closest(".row").remove();
+        bindLineItemControls();
+      }
+    };
+
+    var bindLineItemControls = function() {
+      $('.add-line-item').off('click');
+      $('.add-line-item').on('click', addLineItem);
+      $('.remove-line-item').off('click');
+      $('.remove-line-item').on('click', removeLineItem);
+    }
+
+    bindLineItemControls();
+  });
+</script>
