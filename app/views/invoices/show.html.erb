@@ -21,8 +21,8 @@ table td, table th { padding: 0.5em; border-top: 1px solid #ddd; }
 <body>
   <div class="invoice">
     <header class="text-center">
-      <h1>Jakub Chodounský</h1>
-      <p>1/142 Britomart Street, Wellington, 6023 | Phone: 0210496015</p>
+      <h1><%= Rails.application.secrets.name %></h1>
+      <p><%= Rails.application.secrets.address %></p>
     </header>
 
     <div class="row">
@@ -41,7 +41,7 @@ table td, table th { padding: 0.5em; border-top: 1px solid #ddd; }
       <div class="text-right pull-right">
         <h2 class="text-uppercase">Tax Invoice</h2>
         <address>
-          <strong>GST Number:</strong> 113-926-058<br />
+          <strong>GST Number:</strong> <%= Rails.application.secrets.gst_number %><br />
           <strong>Date:</strong> <%= @invoice.date.strftime('%B %-d %Y') %><br />
           <strong>Invoice: </strong> #<%= @invoice.number %><br />
         </address>
@@ -93,12 +93,12 @@ table td, table th { padding: 0.5em; border-top: 1px solid #ddd; }
         <h3>Payment Options:</h3>
         <address>
           Bank payment in New Zealand<br />
-          Account name: J CHODOUNSKY<br />
-          Account number: 38-9015-0782632-03
+          Account name: <%= Rails.application.secrets.account_name %><br />
+          Account number: <%= Rails.application.secrets.account_number %>
         </address>
         <address>
           Payment by debit card<br />
-          PayPal: jakub.chodounsky@gmail.com
+          PayPal: <%= Rails.application.secrets.paypal %>
         </address>
       </div>
       <div class="text-right pull-right">
