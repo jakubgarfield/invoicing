@@ -33,3 +33,12 @@ module Invoicing
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
+
+SimpleGoogleAuth.configure do |config|
+  config.client_id = "the client ID as supplied by Google in step 2"
+  config.client_secret = "the client secret as supplied by Google in step 2"
+  config.redirect_uri = "http://localhost:8080/google-callback"
+  config.authenticate = lambda do |data|
+    data.email == "jakub.chodounsky@gmail.com"
+  end
+end

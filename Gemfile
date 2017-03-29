@@ -11,6 +11,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'validates_overlap'
 gem 'pdfkit'
+gem 'simple_google_auth'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
