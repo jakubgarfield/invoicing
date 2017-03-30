@@ -6,10 +6,6 @@ namespace :data do
   task import: :environment do
     data_directory = "/home/deploy/"
 
-    Rake::Task["db:drop"].invoke
-    Rake::Task["db:create"].invoke
-    Rake::Task["db:migrate"].invoke
-
     usd = Currency.create!(name: 'US Dollar', code: 'USD', symbol: '$')
     usd.conversion_rates.create!(valid_from: Time.new(2016).beginning_of_year, valid_to: Time.new(2016).end_of_year, rate: 1.4365.to_d)
     usd.conversion_rates.create!(valid_from: Time.new(2017).beginning_of_year, valid_to: Time.new(2017).end_of_year, rate: 1.4023.to_d)
