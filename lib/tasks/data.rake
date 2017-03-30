@@ -4,6 +4,8 @@ namespace :data do
   desc "Imports invoices and expenses from CSV"
 
   task import: :environment do
+    data_directory = "/home/deploy/"
+
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
     Rake::Task["db:migrate"].invoke
@@ -15,7 +17,7 @@ namespace :data do
     nzd = Currency.create!(name: 'New Zealand Dollar', code: 'NZD', symbol: '$')
     nzd.conversion_rates.create!(valid_from: Time.new(2000).beginning_of_year, valid_to: Time.new(2099).end_of_year, rate: 1.to_d)
 
-    CSV.foreach("/Users/jakub/Desktop/clients.csv") do |row|
+    CSV.foreach("#{data_directory}clients.csv") do |row|
       group = row[0].try(:strip)
       currency = Currency.find_by(code: row[1].try(:strip))
       zero_rated_gst = row[2].try(:strip) == 'Yes'
@@ -36,7 +38,7 @@ namespace :data do
     end
 
     nzd = Currency.find_by(code: 'NZD')
-    CSV.foreach("/Users/jakub/Desktop/expenses.csv") do |row|
+    CSV.foreach("#{data_directory}expenses.csv") do |row|
       date = Date.strptime(row[0].strip, "%d/%m/%Y")
       description = row[1].strip
       value = BigDecimal.new(row[2].strip[1..-1])
@@ -45,7 +47,7 @@ namespace :data do
     end
 
     invoice = nil
-    csv_contents = CSV.read("/Users/jakub/Desktop/invoices.csv")
+    csv_contents = CSV.read("#{data_directory}invoices.csv")
     csv_contents.shift
     csv_contents.each do |row|
       if row[0].nil?
