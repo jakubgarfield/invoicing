@@ -33,7 +33,8 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html { render layout: false }
       format.pdf do
-        send_data(PDFKit.new(invoice_url(@invoice)).to_pdf, type: 'application/pdf', filename: @invoice.filename)
+        html = render_to_string(template: 'invoices/show.html.erb', layout: false)
+        send_data(PDFKit.new(html).to_pdf, type: 'application/pdf', filename: @invoice.filename)
       end
     end
   end
