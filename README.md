@@ -1,6 +1,6 @@
 # Invoicing
 
-*like Xero, but shittier.*
+*Like Xero, but shittier.*
 
 Invoicing is an app for issuing invoices, track expenses and managing clients for all the sole traders of New Zealand. That are registered for GST. And can host a Rails app. And are able to configure Google OAuth.
 
@@ -83,3 +83,25 @@ The app is using unicorn configured with two workers to enable PDF generation wi
 ```
 bundle exec unicorn_rails -c config/unicorn.conf
 ```
+
+## Screenshots
+
+Dashboard with your current balance, taxes, expenses and everything sole trader might want to know to run a business.
+
+![Dashboard](screenshots/dashboard.png)
+
+A form to add invoice, making everything smooth and easy. UX expert approved!
+
+![Invoice form](screenshots/add_invoice.png)
+
+A generated PDF invoice, your clients will be left speechless by the beauty of the typography and its kerning.
+
+![Invoice](screenshots/invoice.png)
+
+## Things to do
+
+* recurring expenses
+* move conversion rate to invoice and expense level
+  * get it online from exchange API on addition
+  * this will speed up the dashboard and calculations
+  * also makes it more correct(tm)
