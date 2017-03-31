@@ -1,4 +1,11 @@
 class ExpensesController < ApplicationController
+  def index
+    @gst_groupped_by_month = Expense.order(date: :desc).inject(Hash.new(0)) do |acc, expense|
+      acc[expense.date.strftime('%b %Y')] += expense.gst
+      acc
+    end
+  end
+
   def new
     @currencies = Currency.order(:code)
     @expense = Expense.new(currency: @currencies.first, date: Date.today)

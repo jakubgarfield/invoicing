@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header" data-background-color="blue">
+          <h4 class="title">GST per month</h4>
+          <p class="category">GST paid on all expenses summed through each month</p>
+        </div>
+        <div class="card-content table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th class="text-right">GST</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @gst_groupped_by_month.each do |month, gst| %>
+                <tr>
+                  <td><%= month %></td>
+                  <td class="text-right"><%= number_to_currency(gst, precision: 2, unit: '$') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
