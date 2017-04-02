@@ -7,7 +7,7 @@ class Accountant
     if @date.month < 4
       Time.new(@date.year - 1, 4, 1).beginning_of_day..Time.new(@date.year, 3, 31).end_of_day
     else
-      Time.new(@date.year, 4, 1).beginning_of_day...Time.new(@date.year + 1, 3, 31).end_of_day
+      Time.new(@date.year, 4, 1).beginning_of_day..Time.new(@date.year + 1, 3, 31).end_of_day
     end
   end
 
