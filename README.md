@@ -100,8 +100,8 @@ A generated PDF invoice, your clients will be left speechless by the beauty of t
 
 ## Things to do
 
-* recurring expenses
 * move conversion rate to invoice and expense level
   * get it online from exchange API on addition
   * this will speed up the dashboard and calculations
   * also makes it more correct(tm)
+* CSV export of invoices and expenses in financial year
