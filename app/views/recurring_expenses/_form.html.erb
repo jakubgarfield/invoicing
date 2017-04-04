@@ -1,0 +1,33 @@
+<%= form_for(@recurring_expense) do |f| %>
+  <div class="form-group label-floating">
+    <%= f.label :schedule %>
+    <%= f.schedule_select :schedule, style: :bootstrap %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @recurring_expense.errors.has_key?(:description) %>">
+    <%= f.label :description, class: 'control-label' %>
+    <%= f.text_field :description, class: 'form-control', autofocus: true %>
+  </div>
+  <div class="form-group label-floating <%= "has-error" if @recurring_expense.errors.has_key?(:value) %>">
+    <%= f.label :value, class: 'control-label' %>
+    <%= f.number_field :value, class: 'form-control', step: 0.01, min: 0.01 %>
+  </div>
+  <div class="form-group label-floating">
+    <% @currencies.each do |currency| %>
+      <div class="radio">
+        <label>
+          <%= f.radio_button("currency_id", currency.id.to_s) %>
+          <%= "#{currency.symbol} #{currency.code}" %>
+        </label>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+    <label>
+      <%= f.check_box :includes_gst %>
+      Includes GST?
+    </label>
+    </div>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>

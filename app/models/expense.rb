@@ -1,5 +1,6 @@
 class Expense < ActiveRecord::Base
   belongs_to :currency
+  belongs_to :recurring_expense
 
   validates :currency, presence: true
   validates :description, presence: true

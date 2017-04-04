@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   end
 
   resources :expenses
+  resources :recurring_expenses, only: [:new, :create, :edit, :update, :destroy]
+
   resources :clients, except: [:show] do
     resources :contacts, except: [:index, :show]
   end

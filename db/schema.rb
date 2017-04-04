@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313032926) do
+ActiveRecord::Schema.define(version: 20170403230112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,16 +58,18 @@ ActiveRecord::Schema.define(version: 20170313032926) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.integer  "currency_id",                          null: false
-    t.decimal  "value",        precision: 8, scale: 2, null: false
-    t.boolean  "includes_gst",                         null: false
-    t.string   "description",                          null: false
-    t.date     "date",                                 null: false
+    t.integer  "currency_id",                                  null: false
+    t.decimal  "value",                precision: 8, scale: 2, null: false
+    t.boolean  "includes_gst",                                 null: false
+    t.string   "description",                                  null: false
+    t.datetime "date",                                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recurring_expense_id"
   end
 
   add_index "expenses", ["currency_id"], name: "index_expenses_on_currency_id", using: :btree
+  add_index "expenses", ["recurring_expense_id"], name: "index_expenses_on_recurring_expense_id", using: :btree
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "contact_id",                       null: false
@@ -95,10 +97,38 @@ ActiveRecord::Schema.define(version: 20170313032926) do
 
   add_index "line_items", ["invoice_id"], name: "index_line_items_on_invoice_id", using: :btree
 
+  create_table "recurring_expenses", force: :cascade do |t|
+    t.integer  "currency_id",                          null: false
+    t.decimal  "value",        precision: 8, scale: 2, null: false
+    t.boolean  "includes_gst",                         null: false
+    t.string   "description",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recurring_expenses", ["currency_id"], name: "index_recurring_expenses_on_currency_id", using: :btree
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "schedulable_id"
+    t.string   "schedulable_type"
+    t.date     "date"
+    t.time     "time"
+    t.string   "rule"
+    t.string   "interval"
+    t.text     "day"
+    t.text     "day_of_week"
+    t.datetime "until"
+    t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   add_foreign_key "contacts", "clients"
   add_foreign_key "conversion_rates", "currencies"
   add_foreign_key "expenses", "currencies"
+  add_foreign_key "expenses", "recurring_expenses"
   add_foreign_key "invoices", "contacts"
   add_foreign_key "invoices", "currencies"
   add_foreign_key "line_items", "invoices"
+  add_foreign_key "recurring_expenses", "currencies"
 end

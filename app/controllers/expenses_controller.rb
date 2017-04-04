@@ -4,6 +4,7 @@ class ExpensesController < ApplicationController
       acc[expense.date.strftime('%b %Y')] += expense.gst
       acc
     end
+    @recurring_expenses = RecurringExpense.all
   end
 
   def new
