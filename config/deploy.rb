@@ -4,6 +4,7 @@ lock "3.8.0"
 set :application, 'invoicing'
 set :repo_url, 'git@github.com:jakubgarfield/invoicing.git'
 set :deploy_to, '/home/deploy/invoicing'
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # set :bundle_binstubs, nil
 append :linked_files, "config/database.yml", "config/secrets.yml"
