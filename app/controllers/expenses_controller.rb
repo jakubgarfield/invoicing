@@ -1,9 +1,6 @@
 class ExpensesController < ApplicationController
   def index
-    @gst_groupped_by_month = Expense.order(date: :desc).inject(Hash.new(0)) do |acc, expense|
-      acc[expense.date.strftime('%b %Y')] += expense.gst
-      acc
-    end
+    @gst_periods = GstPeriod.all
     @recurring_expenses = RecurringExpense.all
   end
 

@@ -60,6 +60,8 @@ default: &default
   account_name: J DOE
   account_number: 00-1111-2222222-333
   paypal: john.doe@example.com
+  gst_start: 2016-04-01
+  gst_period_in_months: 6
 
 development:
   <<: *default

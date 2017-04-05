@@ -47,22 +47,26 @@
     <div class="col-lg-6">
       <div class="card">
         <div class="card-header" data-background-color="blue">
-          <h4 class="title">GST per month</h4>
-          <p class="category">GST paid on all expenses summed through each month</p>
+          <h4 class="title">GST</h4>
+          <p class="category">GST summary per period</p>
         </div>
         <div class="card-content table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>Month</th>
-                <th class="text-right">GST</th>
+                <th>Period End</th>
+                <th class="text-right">Total Income</th>
+                <th class="text-right">Zero Rated Income</th>
+                <th class="text-right">Expenses with GST</th>
               </tr>
             </thead>
             <tbody>
-              <% @gst_groupped_by_month.each do |month, gst| %>
+              <% @gst_periods.each do |period| %>
                 <tr>
-                  <td><%= month %></td>
-                  <td class="text-right"><%= number_to_currency(gst, precision: 2, unit: '$') %></td>
+                  <td><%= period.to.strftime('%b %d %Y') %></td>
+                  <td class="text-right"><%= number_to_currency(period.total_income, precision: 2, unit: '$') %></td>
+                  <td class="text-right"><%= number_to_currency(period.total_zero_rated_income, precision: 2, unit: '$') %></td>
+                  <td class="text-right"><%= number_to_currency(period.expenses_with_gst, precision: 2, unit: '$') %></td>
                 </tr>
               <% end %>
             </tbody>
