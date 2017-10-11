@@ -6,6 +6,7 @@ class InvoicesController < ApplicationController
                            date: Date.today,
                            contact: last_invoice.contact,
                            zero_rated_gst: last_invoice.zero_rated_gst?,
+                           tax_rate_for_contractors: last_invoice.tax_rate_for_contractors?,
                            status: :unpaid,
                            number: @numbers[last_invoice.contact.client.group])
     @invoice.line_items.build
@@ -71,6 +72,6 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:contact_id, :currency_id, :date, :zero_rated_gst, :number, :discount_in_percent, :status)
+    params.require(:invoice).permit(:contact_id, :currency_id, :date, :zero_rated_gst, :number, :discount_in_percent, :status, :tax_rate_for_contractors)
   end
 end

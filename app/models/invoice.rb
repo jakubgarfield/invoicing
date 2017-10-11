@@ -35,16 +35,26 @@ class Invoice < ActiveRecord::Base
     if zero_rated_gst?
       0
     else
-      discounted_total * 0.15.to_d
+      current_gst_rate = 0.15.to_d
+      discounted_total * current_gst_rate
     end
   end
 
   def total
-    discounted_total + gst
+    discounted_total + gst - tax_paid
   end
 
   def total_in_nzd
     total * currency.conversion_rate(date).rate
+  end
+
+  def tax_paid
+    if tax_rate_for_contractors?
+      default_tax_rate_for_contractors = 0.2.to_d
+      discounted_total * default_tax_rate_for_contractors
+    else
+      0
+    end
   end
 
   private

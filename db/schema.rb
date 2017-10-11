@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403230112) do
+ActiveRecord::Schema.define(version: 20171011024952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,15 +72,16 @@ ActiveRecord::Schema.define(version: 20170403230112) do
   add_index "expenses", ["recurring_expense_id"], name: "index_expenses_on_recurring_expense_id", using: :btree
 
   create_table "invoices", force: :cascade do |t|
-    t.integer  "contact_id",                       null: false
-    t.integer  "currency_id",                      null: false
-    t.date     "date",                             null: false
-    t.boolean  "zero_rated_gst",                   null: false
-    t.integer  "number",                           null: false
-    t.integer  "discount_in_percents", default: 0, null: false
-    t.integer  "status",               default: 0, null: false
+    t.integer  "contact_id",                               null: false
+    t.integer  "currency_id",                              null: false
+    t.date     "date",                                     null: false
+    t.boolean  "zero_rated_gst",                           null: false
+    t.integer  "number",                                   null: false
+    t.integer  "discount_in_percents",     default: 0,     null: false
+    t.integer  "status",                   default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "tax_rate_for_contractors", default: false, null: false
   end
 
   add_index "invoices", ["contact_id"], name: "index_invoices_on_contact_id", using: :btree

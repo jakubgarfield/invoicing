@@ -57,6 +57,12 @@
           Zero Rated GST?
         </label>
       </div>
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :tax_rate_for_contractors %>
+          Tax rate for contractors? (20%)
+        </label>
+      </div>
     </div>
     <div class="form-group label-floating <%= "has-error" if @invoice.errors.has_key?(:number) %>">
       <%= f.label :number, class: 'control-label' %>

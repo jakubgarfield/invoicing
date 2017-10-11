@@ -40,7 +40,7 @@ class Accountant
   end
 
   def income
-    gross_income - taxes - acc
+    gross_income - (taxes - taxes_paid) - acc
   end
 
   def revenue
@@ -49,6 +49,10 @@ class Accountant
 
   def gross_income
     @gross_income ||= paid_invoices.inject(0) { |sum, invoice| sum + (invoice.total_in_nzd - invoice.gst) }
+  end
+
+  def taxes_paid
+    @taxes_paid ||= paid_invoices.inject(0) { |sum, invoice| sum + invoice.tax_paid }
   end
 
   def claimable_expenses

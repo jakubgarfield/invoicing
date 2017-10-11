@@ -14,7 +14,7 @@
           <i class="material-icons">attach_money</i>
         </div>
         <div class="card-content">
-          <p class="category">Gross Income</p>
+          <p class="category">Received Income</p>
           <h3 class="title"><%= number_to_currency(@accountant.gross_income, precision: 2, unit: '$') %></h3>
         </div>
         <div class="card-footer">
@@ -46,12 +46,12 @@
           <i class="material-icons">store</i>
         </div>
         <div class="card-content">
-          <p class="category">Taxes</p>
-          <h3 class="title"><%= number_to_currency(@accountant.taxes + @accountant.acc + @accountant.gst, precision: 2, unit: '$') %></h3>
+          <p class="category">Levies to Pay</p>
+          <h3 class="title"><%= number_to_currency(@accountant.taxes + @accountant.acc + @accountant.gst - @accountant.taxes_paid, precision: 2, unit: '$') %></h3>
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="material-icons">healing</i> ACC: <%= number_to_currency(@accountant.acc, precision: 2, unit: '$') %> <i class="material-icons">shopping_basket</i> GST: <%= number_to_currency(@accountant.gst, precision: 2, unit: '$') %>
+            <i class="material-icons">healing</i> ACC: <%= number_to_currency(@accountant.acc, precision: 2, unit: '$') %> <i class="material-icons">shopping_basket</i> GST: <%= number_to_currency(@accountant.gst, precision: 2, unit: '$') %> <i class="material-icons">monetization_on</i> Taxes Paid: <%= number_to_currency(@accountant.taxes_paid, precision: 2, unit: '$') %>
           </div>
         </div>
       </div>
