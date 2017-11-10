@@ -51,7 +51,7 @@
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="material-icons">healing</i> ACC: <%= number_to_currency(@accountant.acc, precision: 2, unit: '$') %> <i class="material-icons">shopping_basket</i> GST: <%= number_to_currency(@accountant.gst, precision: 2, unit: '$') %> <i class="material-icons">monetization_on</i> Taxes Paid: <%= number_to_currency(@accountant.taxes_paid, precision: 2, unit: '$') %>
+            <i class="material-icons">healing</i> ACC: <%= number_to_currency(@accountant.acc, precision: 0, unit: '$') %> <i class="material-icons">shopping_basket</i> GST: <%= number_to_currency(@accountant.gst, precision: 0, unit: '$') %> <i class="material-icons">monetization_on</i> Taxes Paid: <%= number_to_currency(@accountant.taxes_paid, precision: 0, unit: '$') %>
           </div>
         </div>
       </div>
