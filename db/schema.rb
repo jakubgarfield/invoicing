@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011024952) do
+ActiveRecord::Schema.define(version: 20180105053336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 20171011024952) do
 
   add_index "expenses", ["currency_id"], name: "index_expenses_on_currency_id", using: :btree
   add_index "expenses", ["recurring_expense_id"], name: "index_expenses_on_recurring_expense_id", using: :btree
+
+  create_table "gst_offsets", force: :cascade do |t|
+    t.decimal  "amount"
+    t.datetime "date"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "contact_id",                               null: false

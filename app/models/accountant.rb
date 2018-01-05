@@ -60,7 +60,8 @@ class Accountant
   end
 
   def claimable_gst
-    @claimable_gst ||= paid_expenses.map(&:gst).sum
+    # GST offsets are used for assets that are depreciated
+    @claimable_gst ||= paid_expenses.map(&:gst).sum + gst_offsets.map(&:amount)
   end
 
   private
@@ -70,6 +71,10 @@ class Accountant
 
   def paid_expenses
     @paid_expenses ||= Expense.includes(:currency).where(date: fiscal_year)
+  end
+
+  def gst_offsets
+    @gst_offsets ||= GstOffset.where(date: fiscal_year)
   end
 
   def tax_component(income, from, to, at)
