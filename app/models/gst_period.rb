@@ -30,6 +30,10 @@ class GstPeriod
   end
 
   def expenses_with_gst
-    Expense.where(date: from..to, includes_gst: true).inject(0) { |acc, expense| acc + expense.value_in_nzd }.to_f
+    Expense.where(date: from..to, includes_gst: true).inject(0) { |acc, expense| acc + expense.value_in_nzd }.to_f + gst_offsets_expenses
+  end
+
+  def gst_offsets_expenses
+    GstOffset.where(date: from..to).map(&:amount) * 23.0 / 3.0
   end
 end
