@@ -61,7 +61,7 @@ class Accountant
 
   def claimable_gst
     # GST offsets are used for assets that are depreciated
-    @claimable_gst ||= paid_expenses.map(&:gst).sum + gst_offsets.map(&:amount)
+    @claimable_gst ||= paid_expenses.map(&:gst).sum + gst_offsets.map(&:amount).sum
   end
 
   private

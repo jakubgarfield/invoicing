@@ -34,6 +34,6 @@ class GstPeriod
   end
 
   def gst_offsets_expenses
-    GstOffset.where(date: from..to).map(&:amount) * 23.0 / 3.0
+    GstOffset.where(date: from..to).map(&:amount).sum * 23.0 / 3.0
   end
 end
