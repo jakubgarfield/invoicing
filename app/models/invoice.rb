@@ -41,7 +41,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total
-    discounted_total + gst - tax_paid
+    discounted_total + gst
   end
 
   def total_in_nzd

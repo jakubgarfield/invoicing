@@ -40,11 +40,11 @@ class Accountant
   end
 
   def income
-    gross_income - (taxes - taxes_paid) - acc
+    gross_income - taxes - acc
   end
 
   def revenue
-    income - claimable_expenses - gst
+    income - claimable_expenses
   end
 
   def gross_income
