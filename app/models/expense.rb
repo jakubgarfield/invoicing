@@ -7,7 +7,6 @@ class Expense < ActiveRecord::Base
   validates :value, presence: true, numericality: { greater_than: 0 }
   validates :includes_gst, inclusion: { in: [ true, false ] }
   validates :date, presence:true
-  validate :is_low_cost_asset
 
   def claimable_value
     value_in_nzd - gst
@@ -23,10 +22,5 @@ class Expense < ActiveRecord::Base
 
   def value_in_nzd
     @value_in_nzd ||= value * currency.conversion_rate(date).rate
-  end
-
-  private
-  def is_low_cost_asset
-    errors.add(:value, 'higher than 500 NZD needs to be depreciated if it is an asset') if value_in_nzd > 500
   end
 end
