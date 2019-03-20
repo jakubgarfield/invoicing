@@ -41,7 +41,7 @@ namespace :data do
     CSV.foreach("#{data_directory}expenses.csv") do |row|
       date = Date.strptime(row[0].strip, "%d/%m/%Y")
       description = row[1].strip
-      value = BigDecimal.new(row[2].strip[1..-1])
+      value = BigDecimal(row[2].strip[1..-1])
       includes_gst = row[4].present?
       nzd.expenses.create!(value: value, includes_gst: includes_gst, description: description, date: date)
     end
@@ -53,7 +53,7 @@ namespace :data do
       if row[0].nil?
         description = row[1].strip
         quantity = row[2].strip.to_i
-        unit_price = BigDecimal.new(row[3].strip[1..-1])
+        unit_price = BigDecimal(row[3].strip[1..-1])
         invoice.line_items.build(description: description, quantity: quantity, unit_price: unit_price)
       else
         invoice.save! unless invoice.nil?
