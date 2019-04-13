@@ -9,7 +9,7 @@ class Currency < ActiveRecord::Base
 
   def conversion_rate(date)
     # TODO: Improve caching of conversion rates for dashboard (renders in 701 ms)
-    available_conversion_rate = conversion_rates.where("valid_from < :date AND valid_to >= :date", date: date).first
+    available_conversion_rate = conversion_rates.where("DATE_TRUNC('day', valid_from) < :date AND DATE_TRUNC('day', valid_to) + interval '1 day' - interval '1 second' >= :date", date: date).first
     raise "Conversion rate for #{date} is missing" if available_conversion_rate.nil?
     available_conversion_rate
   end
