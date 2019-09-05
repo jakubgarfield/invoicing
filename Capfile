@@ -10,6 +10,6 @@ require "capistrano/rails/migrations"
 require "whenever/capistrano"
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.6.1'
+set :rbenv_ruby, '2.6.4'
 
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }

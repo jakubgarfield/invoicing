@@ -1,5 +1,5 @@
-role :app, %w{deploy@107.170.69.55}
-role :web, %w{deploy@107.170.69.55}
-role :db,  %w{deploy@107.170.69.55}
+role :app, %w{deploy@13.84.220.173}
+role :web, %w{deploy@13.84.220.173}
+role :db,  %w{deploy@13.84.220.173}
 
-server '107.170.69.55', user: 'deploy', roles: %w{web app db}
+server '13.84.220.173', user: 'deploy', roles: %w{web app db}
