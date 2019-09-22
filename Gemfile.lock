@@ -101,7 +101,7 @@ GEM
     net-ssh (4.1.0)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
-    pdfkit (0.8.2)
+    pdfkit (0.8.4.1)
     pg (0.19.0)
     rack (1.6.11)
     rack-test (0.6.3)
