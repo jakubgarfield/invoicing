@@ -20,6 +20,17 @@ Ubuntu:
 sudo apt-get install wkhtmltopdf
 ```
 
+When using versions 0.12.4 and higher wkhtmltopdf doesn't run in a headless mode anymore. You need to do something like:
+
+```
+sudo apt-get install wkhtmltopdf
+sudo apt-get install xvfb
+printf '#!/bin/bash\nxvfb-run -a --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf -q $*' > /usr/bin/wkhtmltopdf.sh
+chmod a+x /usr/bin/wkhtmltopdf.sh
+ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf
+wkhtmltopdf http://www.google.com output.pdf
+```
+
 ### Google Authorization
 
 Make yourself a project at [Google Console](https://cloud.google.com/console). In that project, go to the "APIs & auth" tab, then the "Credentials" tab. Create a new client ID of application type "Web application". Set the Authorized Redirect URI to `https://yoursite.com/google-callback`. You might want to put in `http://localhost:8080/google-callback` so you can test locally too.
